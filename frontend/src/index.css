@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #bc002d;
+  /* Traditional Japanese Red */
+  --primary-soft: #ff4d6d;
+  --secondary: #f8c8dc;
+  /* Sakura Pink */
+  --bg-traditional: #fdfaf5;
+  /* Washi Paper Off-white */
+  --text-deep: #2c2c2c;
+  --text-muted: #666666;
+  --glass-border: rgba(188, 0, 45, 0.1);
+  --error: #d63031;
+  --success: #27ae60;
+  --font-main: 'Outfit', 'Noto Sans JP', sans-serif;
+  --font-japanese: 'Noto Sans JP', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-traditional);
+  background-image: url('C:/Users/vanki/.gemini/antigravity/brain/f9199c93-fd79-4d8a-8fe0-bd2a1f4c2c71/japanese_seigaiha_pattern_1766667324475.png');
+  background-repeat: repeat;
+  background-size: 300px;
+  color: var(--text-deep);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar with Japanese colors */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-traditional);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}

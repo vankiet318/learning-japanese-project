@@ -1,3 +1,6 @@
+from sqlalchemy import Column, Integer, String
+from app.db.base import Base
+
 class Kana(Base):
     __tablename__ = "kana"
 
