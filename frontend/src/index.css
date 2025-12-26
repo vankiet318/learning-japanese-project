@@ -1,20 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
+  /* Common Variables */
+  --font-main: 'Outfit', 'Noto Sans JP', sans-serif;
+  --font-japanese: 'Noto Sans JP', sans-serif;
+  --error: #d63031;
+  --success: #27ae60;
+  --transition-speed: 0.5s;
+
+  /* Light Mode (Traditional) */
   --primary: #bc002d;
-  /* Traditional Japanese Red */
   --primary-soft: #ff4d6d;
   --secondary: #f8c8dc;
-  /* Sakura Pink */
   --bg-traditional: #fdfaf5;
-  /* Washi Paper Off-white */
+  --bg-gradient: linear-gradient(135deg, #d05d7e 0%, #f4a7bb 50%, #fce4ec 100%);
   --text-deep: #2c2c2c;
   --text-muted: #666666;
   --glass-border: rgba(188, 0, 45, 0.1);
-  --error: #d63031;
-  --success: #27ae60;
-  --font-main: 'Outfit', 'Noto Sans JP', sans-serif;
-  --font-japanese: 'Noto Sans JP', sans-serif;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --hero-bg: url('/assets/traditional_light.png');
+  --kana-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] {
+  /* Dark Mode (Modern) */
+  --primary: #00f2ff;
+  /* Neon cyan */
+  --primary-soft: #7000ff;
+  /* Neon purple */
+  --secondary: #1a1a2e;
+  --bg-traditional: #0a0a12;
+  --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #24243e 50%, #1a1a2e 100%);
+  --text-deep: #e0e0e0;
+  --text-muted: #a0a0a0;
+  --glass-border: rgba(0, 242, 255, 0.1);
+  --card-bg: rgba(15, 15, 25, 0.9);
+  --hero-bg: url('/assets/modern_dark.png');
+  --kana-color: rgba(0, 242, 255, 0.03);
 }
 
 * {
@@ -32,6 +54,7 @@ body {
   color: var(--text-deep);
   overflow-x: hidden;
   min-height: 100vh;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 #root {
