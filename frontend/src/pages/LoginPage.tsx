@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LoginPage.css';
 import HeroSection from '../components/HeroSection';
 import SakuraRain from '../components/SakuraRain';
 
 const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +46,10 @@ const LoginPage: React.FC = () => {
                             <h1>Okaeri!</h1>
                             <p>Welcome back to your learning journey.</p>
                             <div className="success-icon">🍱</div>
-                            <a href="/dashboard" className="login-btn" onClick={(e) => e.preventDefault()}>Go to Dashboard / ダッシュボードへ</a>
+                            <a href="/hiragana" className="login-btn" onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/hiragana');
+                            }}>Start Learning / 学習を始める</a>
                         </div>
                     </div>
                 </div>

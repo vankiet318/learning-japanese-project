@@ -1,0 +1,213 @@
+.hiragana-container {
+    min-height: 100vh;
+    padding: 80px 40px;
+    background: var(--bg-traditional);
+    transition: background-color var(--transition-speed);
+}
+
+.hiragana-header {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.jp-subtitle {
+    display: block;
+    font-family: var(--font-japanese);
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.2rem;
+}
+
+.hiragana-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, var(--primary), var(--primary-soft));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hiragana-header p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.btn-test {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto;
+    padding: 1rem 2.5rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(188, 0, 45, 0.2);
+}
+
+.btn-test:hover {
+    transform: translateY(-3px);
+    background: var(--primary-soft);
+    box-shadow: 0 15px 30px rgba(188, 0, 45, 0.3);
+}
+
+.test-icon {
+    font-size: 1.3rem;
+}
+
+.hiragana-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.char-card {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.char-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 12px 30px rgba(188, 0, 45, 0.1);
+}
+
+.char-card.active {
+    transform: scale(0.95);
+    background: rgba(var(--primary), 0.05);
+    border-color: var(--primary);
+}
+
+.char-display {
+    font-size: 3.5rem;
+    font-family: var(--font-japanese);
+    margin-bottom: 0.5rem;
+    color: var(--text-deep);
+    transition: color 0.3s;
+    z-index: 2;
+}
+
+.romaji-display {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    z-index: 2;
+}
+
+.card-ink {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s, opacity 0.6s;
+    z-index: 1;
+}
+
+.char-card.active .card-ink {
+    width: 300%;
+    height: 300%;
+    opacity: 0.1;
+}
+
+.char-spacer {
+    aspect-ratio: 1;
+}
+
+.pronunciation-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.popup-char {
+    font-size: 20rem;
+    font-family: var(--font-japanese);
+    color: var(--primary);
+    opacity: 0;
+    animation: popupFade 1s forwards;
+}
+
+@keyframes popupFade {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.2;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Dark Mode Overrides */
+[data-theme='dark'] .char-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+}
+
+[data-theme='dark'] .char-display {
+    color: var(--text-deep);
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+}
+
+[data-theme='dark'] .char-card.active .char-display {
+    color: var(--primary);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .hiragana-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .char-display {
+        font-size: 2.5rem;
+    }
+
+    .hiragana-header h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hiragana-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
