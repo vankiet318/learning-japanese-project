@@ -13,11 +13,13 @@ app = FastAPI(title="Japanese Learning Platform")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",  # Local React
-        "http://localhost:3000",  # Alternative Local React
-        "https://jplearning.vercel.app",  # Production
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://jplearning.vercel.app",
+        "https://jplearning.vercel.app/",
     ],
-    allow_origin_regex="https://.*\.vercel\.app",  # Allow all Vercel subdomains
+    # Use a more liberal regex to ensure all Vercel subdomains and common patterns match
+    allow_origin_regex=r"https://.*\.vercel\.app$|https://jplearning\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
