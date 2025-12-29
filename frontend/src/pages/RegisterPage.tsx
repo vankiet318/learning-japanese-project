@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { api } from '../api/client';
 import './RegisterPage.css';
 import HeroSection from '../components/HeroSection';
 import SakuraRain from '../components/SakuraRain';
@@ -19,12 +19,12 @@ const RegisterPage: React.FC = () => {
             setError('Passwords do not match / パスワードが一致しません');
             return;
         }
-        
+
         setIsLoading(true);
         setError('');
-        
+
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/auth/register', {
+            const response = await api.post('/auth/register', {
                 name,
                 email,
                 password
@@ -64,69 +64,69 @@ const RegisterPage: React.FC = () => {
                 <SakuraRain />
 
                 {/* Decorative Japanese Elements */}
-            <div className="floating-kana kana-1">れ</div>
-            <div className="floating-kana kana-2">ギ</div>
-            <div className="floating-kana kana-3">す</div>
-            <div className="floating-kana kana-4">タ</div>
-            
-            <div className="login-card">
-                <div className="login-header">
-                    <span className="jp-label">新規登録</span>
-                    <h1>Hajimemashou</h1>
-                    <p>Join the Japanese learning community</p>
-                </div>
+                <div className="floating-kana kana-1">れ</div>
+                <div className="floating-kana kana-2">ギ</div>
+                <div className="floating-kana kana-3">す</div>
+                <div className="floating-kana kana-4">タ</div>
 
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <label>Full Name / お名前</label>
-                        <input 
-                            type="text" 
-                            placeholder="Your Name" 
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
+                <div className="login-card">
+                    <div className="login-header">
+                        <span className="jp-label">新規登録</span>
+                        <h1>Hajimemashou</h1>
+                        <p>Join the Japanese learning community</p>
                     </div>
 
-                    <div className="input-group">
-                        <label>Email / メール</label>
-                        <input 
-                            type="email" 
-                            placeholder="name@example.com" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+                    <form className="login-form" onSubmit={handleSubmit}>
+                        <div className="input-group">
+                            <label>Full Name / お名前</label>
+                            <input
+                                type="text"
+                                placeholder="Your Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <div className="input-group">
-                        <label>Password / パスワード</label>
-                        <input 
-                            type="password" 
-                            placeholder="••••••••" 
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+                        <div className="input-group">
+                            <label>Email / メール</label>
+                            <input
+                                type="email"
+                                placeholder="name@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <div className="input-group">
-                        <label>Confirm Password / パスワード再入力</label>
-                        <input 
-                            type="password" 
-                            placeholder="••••••••" 
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+                        <div className="input-group">
+                            <label>Password / パスワード</label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    {error && <div className="error-message">{error}</div>}
+                        <div className="input-group">
+                            <label>Confirm Password / パスワード再入力</label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <button type="submit" className="login-btn" disabled={isLoading}>
-                        {isLoading ? <span className="loader"></span> : "Create Account / 登録する"}
-                    </button>
-                </form>
+                        {error && <div className="error-message">{error}</div>}
+
+                        <button type="submit" className="login-btn" disabled={isLoading}>
+                            {isLoading ? <span className="loader"></span> : "Create Account / 登録する"}
+                        </button>
+                    </form>
 
                     <div className="login-footer">
                         <p>Already have an account? <a href="/login">Sign In / ログイン</a></p>

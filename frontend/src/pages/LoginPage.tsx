@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { api } from '../api/client';
 import './LoginPage.css';
 import HeroSection from '../components/HeroSection';
 import SakuraRain from '../components/SakuraRain';
@@ -19,9 +19,9 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         setIsLoading(true);
         setError('');
-        
+
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/auth/login', {
+            const response = await api.post('/auth/login', {
                 email,
                 password
             });
@@ -64,56 +64,56 @@ const LoginPage: React.FC = () => {
                 <SakuraRain />
 
                 {/* Decorative Japanese Elements */}
-            <div className="floating-kana kana-1">あ</div>
-            <div className="floating-kana kana-2">カ</div>
-            <div className="floating-kana kana-3">さ</div>
-            <div className="floating-kana kana-4">タ</div>
-            
-            <div className="login-card">
-                <div className="login-header">
-                    <span className="jp-label">ログイン</span>
-                    <h1>Konnichiwa</h1>
-                    <p>Start your Japanese learning journey today</p>
-                </div>
+                <div className="floating-kana kana-1">あ</div>
+                <div className="floating-kana kana-2">カ</div>
+                <div className="floating-kana kana-3">さ</div>
+                <div className="floating-kana kana-4">タ</div>
 
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <label>Email / メール</label>
-                        <input 
-                            type="email" 
-                            placeholder="name@example.com" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
+                <div className="login-card">
+                    <div className="login-header">
+                        <span className="jp-label">ログイン</span>
+                        <h1>Konnichiwa</h1>
+                        <p>Start your Japanese learning journey today</p>
                     </div>
 
-                    <div className="input-group">
-                        <label>Password / パスワード</label>
-                        <div className="password-wrapper">
-                            <input 
-                                type={showPassword ? "text" : "password"} 
-                                placeholder="••••••••" 
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                    <form className="login-form" onSubmit={handleSubmit}>
+                        <div className="input-group">
+                            <label>Email / メール</label>
+                            <input
+                                type="email"
+                                placeholder="name@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
-                            <button 
-                                type="button" 
-                                className="toggle-password"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
-                                {showPassword ? "Hide" : "Show"}
-                            </button>
                         </div>
-                    </div>
 
-                    {error && <div className="error-message">{error}</div>}
+                        <div className="input-group">
+                            <label>Password / パスワード</label>
+                            <div className="password-wrapper">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="••••••••"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="toggle-password"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? "Hide" : "Show"}
+                                </button>
+                            </div>
+                        </div>
 
-                    <button type="submit" className="login-btn" disabled={isLoading}>
-                        {isLoading ? <span className="loader"></span> : "Sign In / ログイン"}
-                    </button>
-                </form>
+                        {error && <div className="error-message">{error}</div>}
+
+                        <button type="submit" className="login-btn" disabled={isLoading}>
+                            {isLoading ? <span className="loader"></span> : "Sign In / ログイン"}
+                        </button>
+                    </form>
 
                     <div className="login-footer">
                         <p>Don't have an account? <a href="/register">Sign Up / 会員登録</a></p>
