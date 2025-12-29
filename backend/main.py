@@ -16,8 +16,8 @@ app.add_middleware(
         "http://localhost:5173",  # Local React
         "http://localhost:3000",  # Alternative Local React
         "https://jplearning.vercel.app",  # Production
-        "https://jplearning.vercel.app/", # Production with trailing slash
     ],
+    allow_origin_regex="https://.*\.vercel\.app",  # Allow all Vercel subdomains
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
