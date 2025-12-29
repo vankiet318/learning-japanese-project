@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./dev.db"
     
     # Security
-    SECRET_KEY: str = "change-me"
+    SECRET_KEY: str = "supersecretkey123"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 days
     
     @field_validator("DATABASE_URL", mode="before")
