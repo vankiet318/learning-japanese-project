@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "/api/v1";
+let API_URL = import.meta.env.VITE_API_URL || "/api/v1";
+
+// If it's a full URL and doesn't contain the version prefix, append it
+if (API_URL.startsWith('http') && !API_URL.includes('/api/v1')) {
+  API_URL = API_URL.replace(/\/$/, "") + "/api/v1";
+}
 
 export const api = axios.create({
   baseURL: API_URL,

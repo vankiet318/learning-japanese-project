@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings
 from pydantic import ValidationError, field_validator
-from typing import Optional
+from typing import Optional, Union
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Japanese Kana Learning"
@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 days
     
     @field_validator("DATABASE_URL", mode="before")
-    def assemble_db_connection(cls, v: Optional[str]) -> str:
+    def assemble_db_connection(cls, v: Union[str, None]) -> str:
         if isinstance(v, str) and v.startswith("postgres://"):
             return v.replace("postgres://", "postgresql://", 1)
         return v or "sqlite:///./dev.db"

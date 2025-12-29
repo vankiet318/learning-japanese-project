@@ -1,14 +1,14 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, Union
 
 class UserCreate(BaseModel):
-    name: Optional[str] = None
+    name: Union[str, None] = None
     email: EmailStr
     password: str
 
 class UserOut(BaseModel):
     id: int
-    name: Optional[str] = None
+    name: Union[str, None] = None
     email: EmailStr
 
     class Config:
