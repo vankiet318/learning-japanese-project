@@ -7,7 +7,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api/v1': {
-                target: 'https://japanese-backend-7jun.onrender.com',
+                target: 'http://localhost:8000',
                 changeOrigin: true,
             }
         }

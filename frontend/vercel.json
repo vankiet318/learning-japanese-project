@@ -3,6 +3,10 @@
         {
             "source": "/api/v1/:path*",
             "destination": "https://japanese-backend-7jun.onrender.com/api/v1/:path*"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/"
         }
     ]
 }
