@@ -14,10 +14,10 @@ services:
         value: 10000
 
   # Frontend service
-  - type: static
+  - type: web
     name: japanese-learning-frontend
     buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/dist
+    publishPath: frontend
     routes:
       - type: rewrite
         source: /api/v1/*
