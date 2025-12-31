@@ -16,9 +16,8 @@ services:
   # Frontend service
   - type: static
     name: japanese-learning-frontend
-    env: static
     buildCommand: cd frontend && npm install && npm run build
-    publishPath: frontend/dist
+    staticPublishPath: frontend/dist
     routes:
       - type: rewrite
         source: /api/v1/*
