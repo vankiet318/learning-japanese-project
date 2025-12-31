@@ -14,7 +14,7 @@ services:
         value: 10000
 
   # Frontend service
-  - type: web
+  - type: static
     name: japanese-learning-frontend
     env: static
     buildCommand: cd frontend && npm install && npm run build
