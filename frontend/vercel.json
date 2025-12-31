@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/api/v1/:path*",
-            "destination": "https://japanese-backend-7jun.onrender.com/api/v1/:path*"
+            "destination": "https://learning-japanese-project.onrender.com/api/v1/:path*"
         },
         {
             "source": "/(.*)",
