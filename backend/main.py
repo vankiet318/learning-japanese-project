@@ -15,11 +15,11 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://localhost:3000",
-        "https://jplearning.vercel.app",
-        "https://jplearning.vercel.app/",
+        "https://learning-japanese-project-qdjj.vercel.app",
+        "https://learning-japanese-project.onrender.com",
     ],
     # Use a more liberal regex to ensure all Vercel subdomains and common patterns match
-    allow_origin_regex=r"https://.*\.vercel\.app$|https://jplearning\.vercel\.app",
+    allow_origin_regex=r"https://.*\.vercel\.app$|https://.*\.onrender\.com$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

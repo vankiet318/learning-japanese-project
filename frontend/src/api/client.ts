@@ -2,6 +2,8 @@ import axios from "axios";
 
 let API_URL = import.meta.env.VITE_API_URL || "/api/v1";
 
+console.log('Current API_URL:', API_URL);
+
 // If it's a full URL and doesn't contain the version prefix, append it
 if (API_URL.startsWith('http') && !API_URL.includes('/api/v1')) {
   API_URL = API_URL.replace(/\/$/, "") + "/api/v1";
