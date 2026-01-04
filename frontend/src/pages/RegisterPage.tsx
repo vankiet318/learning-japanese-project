@@ -1,61 +1,11 @@
-import React, { useState } from 'react';
-import { api } from '../api/client';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 import HeroSection from '../components/HeroSection';
 import SakuraRain from '../components/SakuraRain';
 
 const RegisterPage: React.FC = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (password !== confirmPassword) {
-            setError('Passwords do not match / パスワードが一致しません');
-            return;
-        }
-
-        setIsLoading(true);
-        setError('');
-
-        try {
-            const response = await api.post('/auth/register', {
-                name,
-                email,
-                password
-            });
-            console.log('Register success:', response.data);
-            setSuccess(true);
-        } catch (err: any) {
-            setError(err.response?.data?.detail || 'Something went wrong. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    if (success) {
-        return (
-            <div className="login-container">
-                <HeroSection />
-                <div className="login-form-side">
-                    <SakuraRain />
-                    <div className="login-card success-card">
-                        <div className="login-header">
-                            <span className="jp-label">完了</span>
-                            <h1>Omedetou!</h1>
-                            <p>Your account has been created successfully.</p>
-                            <a href="/login" className="login-btn">Sign In / ログイン</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    const navigate = useNavigate();
 
     return (
         <div className="login-container">
@@ -76,57 +26,14 @@ const RegisterPage: React.FC = () => {
                         <p>Join the Japanese learning community</p>
                     </div>
 
-                    <form className="login-form" onSubmit={handleSubmit}>
-                        <div className="input-group">
-                            <label>Full Name / お名前</label>
-                            <input
-                                type="text"
-                                placeholder="Your Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        <div className="input-group">
-                            <label>Email / メール</label>
-                            <input
-                                type="email"
-                                placeholder="name@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        <div className="input-group">
-                            <label>Password / パスワード</label>
-                            <input
-                                type="password"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        <div className="input-group">
-                            <label>Confirm Password / パスワード再入力</label>
-                            <input
-                                type="password"
-                                placeholder="••••••••"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        {error && <div className="error-message">{error}</div>}
-
-                        <button type="submit" className="login-btn" disabled={isLoading}>
-                            {isLoading ? <span className="loader"></span> : "Create Account / 登録する"}
+                    <div className="login-actions" style={{ marginTop: '2rem', textAlign: 'center' }}>
+                        <button 
+                            className="login-btn" 
+                            onClick={() => navigate('/hiragana')}
+                        >
+                            Start Learning / 学習を始める
                         </button>
-                    </form>
+                    </div>
 
                     <div className="login-footer">
                         <p>Already have an account? <a href="/login">Sign In / ログイン</a></p>
