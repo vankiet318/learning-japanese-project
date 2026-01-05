@@ -1,13 +1,32 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ALL_VALID_CHARS, HiraganaChar } from '../constants/hiragana';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ALL_VALID_CHARS, HiraganaChar, HIRAGANA_ROWS } from '../constants/hiragana';
 import { soundService } from '../utils/SoundService';
 import './QuizPage.css';
 
-const QUESTIONS_PER_QUIZ = 10;
+interface QuizSettings {
+  selectedRows: string[];
+  questionCount: number | 'infinity';
+}
 
 const QuizPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const settings = (location.state as QuizSettings) || {
+    selectedRows: HIRAGANA_ROWS.map(r => r.name),
+    questionCount: 10
+  };
+
+  const pool = useMemo(() => ALL_VALID_CHARS.filter(char => 
+    HIRAGANA_ROWS
+      .filter(r => settings.selectedRows.includes(r.name))
+      .some(r => r.chars.some(c => c.char === char.char))
+  ), [settings.selectedRows]);
+
+  const isEndless = settings.questionCount === 'infinity';
+  const totalQuestions = isEndless ? 0 : settings.questionCount as number;
+
+
   const [currentStep, setCurrentStep] = useState(0);
   const [score, setScore] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
@@ -19,12 +38,14 @@ const QuizPage: React.FC = () => {
   } | null>(null);
 
   const generateQuestion = useCallback(() => {
-    const correctChar = ALL_VALID_CHARS[Math.floor(Math.random() * ALL_VALID_CHARS.length)];
+    if (pool.length === 0) return;
+    const correctChar = pool[Math.floor(Math.random() * pool.length)];
     
-    // Generate 3 incorrect options
+    // Generate 3 incorrect options from the pool if possible, otherwise from ALL_VALID_CHARS
+    const optionsPool = pool.length >= 4 ? pool : ALL_VALID_CHARS;
     const incorrectOptions: string[] = [];
     while (incorrectOptions.length < 3) {
-      const randomChar = ALL_VALID_CHARS[Math.floor(Math.random() * ALL_VALID_CHARS.length)];
+      const randomChar = optionsPool[Math.floor(Math.random() * optionsPool.length)];
       if (randomChar.romaji !== correctChar.romaji && !incorrectOptions.includes(randomChar.romaji)) {
         incorrectOptions.push(randomChar.romaji);
       }
@@ -39,7 +60,7 @@ const QuizPage: React.FC = () => {
       answered: false,
       selectedIndex: null
     });
-  }, []);
+  }, [pool]);
 
   useEffect(() => {
     generateQuestion();
@@ -68,7 +89,7 @@ const QuizPage: React.FC = () => {
 
     // Auto next after 1.8s (a bit longer to see the real answer)
     setTimeout(() => {
-      if (currentStep < QUESTIONS_PER_QUIZ - 1) {
+      if (isEndless || currentStep < (totalQuestions as number) - 1) {
         setCurrentStep(s => s + 1);
         generateQuestion();
       } else {
@@ -77,6 +98,12 @@ const QuizPage: React.FC = () => {
       }
     }, 1800);
   };
+
+  const finishEndless = () => {
+    soundService.playFinish();
+    setQuizFinished(true);
+  };
+
 
   if (quizFinished) {
     return (
@@ -87,17 +114,24 @@ const QuizPage: React.FC = () => {
             <h1>Quiz Complete!</h1>
             <div className="score-display">
               <span className="score-num">{score}</span>
-              <span className="score-total">/ {QUESTIONS_PER_QUIZ}</span>
+              <span className="score-total">/ {isEndless ? currentStep + 1 : totalQuestions}</span>
             </div>
             <p className="summary-text">
-              {score === QUESTIONS_PER_QUIZ ? "Perfect! You're a Master!" : 
-               score >= 7 ? "Great job! Keep it up!" : 
+              {isEndless ? `Great session! You mastered ${score} characters.` :
+               score === totalQuestions ? "Perfect! You're a Master!" : 
+               score >= totalQuestions * 0.7 ? "Great job! Keep it up!" : 
                "Good effort! Practice makes perfect."}
             </p>
           </div>
           <div className="summary-actions">
-            <button className="btn-quiz primary" onClick={() => window.location.reload()}>Try Again</button>
-            <button className="btn-quiz secondary" onClick={() => navigate('/hiragana')}>Return to Learning</button>
+            <button className="btn-quiz primary" onClick={() => {
+              soundService.playClick();
+              window.location.reload();
+            }}>Try Again</button>
+            <button className="btn-quiz secondary" onClick={() => {
+              soundService.playClick();
+              navigate('/hiragana');
+            }}>Return to Learning</button>
           </div>
         </div>
       </div>
@@ -106,14 +140,31 @@ const QuizPage: React.FC = () => {
 
   return (
     <div className="quiz-container">
-      <div className="quiz-progress">
-        <div className="progress-bar" style={{ width: `${((currentStep + 1) / QUESTIONS_PER_QUIZ) * 100}%` }}></div>
-        <span className="progress-text">Question {currentStep + 1} of {QUESTIONS_PER_QUIZ}</span>
+      <button className="btn-back" onClick={() => {
+        soundService.playClick();
+        navigate('/hiragana');
+      }}>
+        <span className="back-text">Back</span>
+        <span className="back-icon">←</span>
+      </button>
+
+      <div className="quiz-progress-container">
+        <div className="quiz-progress">
+          <div 
+            className="progress-bar" 
+            style={{ width: isEndless ? '100%' : `${((currentStep + 1) / totalQuestions) * 100}%` }}
+          ></div>
+          <span className="progress-text">
+            {isEndless ? `Infinite Mode - Question ${currentStep + 1}` : `Question ${currentStep + 1} of ${totalQuestions}`}
+          </span>
+        </div>
       </div>
 
       <div className="quiz-card">
         <div className="question-area">
-          <span className="jp-label">これの読み方は？</span>
+          <div className="question-header">
+            <span className="jp-label">これの読み方は？</span>
+          </div>
           <div className="display-char">{currentQuestion?.char.char}</div>
         </div>
 
@@ -139,6 +190,12 @@ const QuizPage: React.FC = () => {
             );
           })}
         </div>
+      </div>
+
+      <div className="quiz-actions-footer">
+        <button className="btn-finish-quiz" onClick={finishEndless}>
+          Finish Quiz
+        </button>
       </div>
     </div>
   );

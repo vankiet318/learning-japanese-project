@@ -3,8 +3,21 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    background: var(--bg-traditional);
-    transition: background-color var(--transition-speed);
+    background: url('/assets/traditional_light.png') no-repeat center center fixed;
+    background-size: cover;
+    transition: background var(--transition-speed);
+}
+
+.home-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1;
 }
 
 .home-layout {
@@ -22,10 +35,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
     border-right: 1px solid var(--glass-border);
     position: relative;
+}
+
+[data-theme='dark'] .auth-panel {
+    background: rgba(20, 20, 20, 0.8);
 }
 
 .auth-header h1 {
@@ -240,9 +257,13 @@
     }
 }
 
-[data-theme='dark'] .btn-login {
-    background: var(--primary);
-    color: #000;
+[data-theme='dark'] .home-container {
+    background: url('/assets/modern_dark.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+[data-theme='dark'] .home-container::before {
+    background: rgba(0, 0, 0, 0.6);
 }
 
 [data-theme='dark'] .circle-backdrop {

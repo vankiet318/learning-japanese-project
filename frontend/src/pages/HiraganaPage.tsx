@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HIRAGANA_DATA } from '../constants/hiragana';
 import { soundService } from '../utils/SoundService';
+import QuizSetup from '../components/QuizSetup';
 import './HiraganaPage.css';
 
 const HiraganaPage: React.FC = () => {
   const navigate = useNavigate();
   const [activeChar, setActiveChar] = useState<string | null>(null);
+  const [showSetup, setShowSetup] = useState(false);
 
   const playPronunciation = (char: string) => {
     soundService.playClick();
@@ -20,8 +22,19 @@ const HiraganaPage: React.FC = () => {
     setTimeout(() => setActiveChar(null), 1000);
   };
 
+  const startQuiz = (settings: { selectedRows: string[], questionCount: number | 'infinity' }) => {
+    soundService.playClick();
+    navigate('/quiz', { state: settings });
+  };
+
   return (
     <div className="hiragana-container">
+      {showSetup && (
+        <QuizSetup 
+          onStart={startQuiz} 
+          onCancel={() => setShowSetup(false)} 
+        />
+      )}
       <div className="hiragana-header">
         <div className="header-info">
           <span className="jp-subtitle">ひらがな</span>
@@ -32,7 +45,7 @@ const HiraganaPage: React.FC = () => {
             className="btn-test"
             onClick={() => {
               soundService.playClick();
-              navigate('/quiz');
+              setShowSetup(true);
             }}
           >
             Test Your Knowledge
