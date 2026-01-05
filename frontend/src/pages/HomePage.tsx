@@ -22,18 +22,11 @@ const HomePage: React.FC = () => {
                     <div className="auth-buttons">
                         <button 
                             className="btn-auth btn-login" 
-                            onClick={() => navigate('/login')}
+                            style={{ width: '100%', maxWidth: '300px' }}
+                            onClick={() => navigate('/hiragana')}
                         >
-                            <span className="btn-text">Sign In</span>
-                            <span className="btn-jp">ログイン</span>
-                        </button>
-                        
-                        <button 
-                            className="btn-auth btn-register" 
-                            onClick={() => navigate('/register')}
-                        >
-                            <span className="btn-text">Get Started</span>
-                            <span className="btn-jp">新規登録</span>
+                            <span className="btn-text">Start Learning</span>
+                            <span className="btn-jp">学習を始める</span>
                         </button>
                     </div>
 

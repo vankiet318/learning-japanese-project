@@ -35,7 +35,6 @@ const HiraganaPage: React.FC = () => {
               navigate('/quiz');
             }}
           >
-            <span className="test-icon">⚔️</span>
             Test Your Knowledge
           </button>
         </div>
