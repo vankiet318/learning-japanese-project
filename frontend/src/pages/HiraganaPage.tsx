@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { HIRAGANA_DATA } from '../constants/hiragana';
 import { soundService } from '../utils/SoundService';
 import QuizSetup from '../components/QuizSetup';
@@ -7,8 +8,10 @@ import './HiraganaPage.css';
 
 const HiraganaPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   const [activeChar, setActiveChar] = useState<string | null>(null);
   const [showSetup, setShowSetup] = useState(false);
+
 
   const playPronunciation = (char: string) => {
     soundService.playClick();
@@ -29,6 +32,11 @@ const HiraganaPage: React.FC = () => {
 
   return (
     <div className="hiragana-container">
+      {isAuthenticated && user && (
+        <div className="user-badge">
+          <span className="user-name">{user.username}</span>
+        </div>
+      )}
       {showSetup && (
         <QuizSetup 
           onStart={startQuiz} 
@@ -40,6 +48,8 @@ const HiraganaPage: React.FC = () => {
           <span className="jp-subtitle">ひらがな</span>
           <h1>Hiragana Alphabet</h1>
           <p>Click a character to hear its pronunciation</p>
+
+
           
           <button 
             className="btn-test"

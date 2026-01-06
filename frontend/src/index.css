@@ -10,9 +10,11 @@
 
   /* Light Mode (Traditional) */
   --primary: #bc002d;
+  --primary-rgb: 188, 0, 45;
   --primary-soft: #ff4d6d;
   --secondary: #f8c8dc;
   --bg-traditional: #fdfaf5;
+  --bg-rgb: 253, 250, 245;
   --bg-gradient: linear-gradient(135deg, #d05d7e 0%, #f4a7bb 50%, #fce4ec 100%);
   --text-deep: #2c2c2c;
   --text-muted: #666666;
@@ -25,11 +27,13 @@
 [data-theme='dark'] {
   /* Dark Mode (Modern) */
   --primary: #00f2ff;
+  --primary-rgb: 0, 242, 255;
   /* Neon cyan */
   --primary-soft: #7000ff;
   /* Neon purple */
   --secondary: #1a1a2e;
   --bg-traditional: #0a0a12;
+  --bg-rgb: 10, 10, 18;
   --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #24243e 50%, #1a1a2e 100%);
   --text-deep: #e0e0e0;
   --text-muted: #a0a0a0;
@@ -38,6 +42,7 @@
   --hero-bg: url('/assets/modern_dark.png');
   --kana-color: rgba(0, 242, 255, 0.03);
 }
+
 
 * {
   margin: 0;

@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SakuraRain from '../components/SakuraRain';
+import { useAuth } from '../context/AuthContext';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
     const navigate = useNavigate();
+    const { isAuthenticated, user, logout } = useAuth();
 
     return (
         <div className="home-container">
@@ -14,20 +16,57 @@ const HomePage: React.FC = () => {
                 {/* Left Side: Navigation/Auth */}
                 <div className="auth-panel">
                     <div className="auth-header">
-                        <span className="jp-tagline">ようこそ</span>
-                        <h1>Start Your Journey</h1>
-                        <p>Master the art of Japanese through focus and immersion.</p>
+                        <span className="jp-tagline">{isAuthenticated ? `お帰りなさい, ${user?.username}` : 'ようこそ'}</span>
+                        <h1>{isAuthenticated ? 'Continue Your Journey' : 'Start Your Journey'}</h1>
+                        <p>{isAuthenticated 
+                            ? 'Ready to pick up where you left off? Your progress is waiting.' 
+                            : 'Master the art of Japanese through focus and immersion.'}
+                        </p>
                     </div>
 
                     <div className="auth-buttons">
-                        <button 
-                            className="btn-auth btn-login" 
-                            style={{ width: '100%', maxWidth: '300px' }}
-                            onClick={() => navigate('/hiragana')}
-                        >
-                            <span className="btn-text">Start Learning</span>
-                            <span className="btn-jp">学習を始める</span>
-                        </button>
+                        {!isAuthenticated ? (
+                            <>
+                                <button 
+                                    className="btn-auth btn-login" 
+                                    style={{ width: '100%', maxWidth: '300px' }}
+                                    onClick={() => navigate('/login')}
+                                >
+                                    <span className="btn-text">Login</span>
+                                    <span className="btn-jp">ログイン</span>
+                                </button>
+                                <button 
+                                    className="btn-auth" 
+                                    style={{ width: '100%', maxWidth: '300px' }}
+                                    onClick={() => navigate('/register')}
+                                >
+
+                                    <span className="btn-text">Register</span>
+                                    <span className="btn-jp">登録</span>
+                                </button>
+                            </>
+                        ) : (
+
+
+                            <>
+                                <button 
+                                    className="btn-auth btn-login" 
+                                    style={{ width: '100%', maxWidth: '300px' }}
+                                    onClick={() => navigate('/hiragana')}
+                                >
+                                    <span className="btn-text">Start Learning</span>
+                                    <span className="btn-jp">学習を始める</span>
+                                </button>
+                                <button 
+                                    className="btn-auth" 
+                                    style={{ width: '100%', maxWidth: '300px', borderColor: 'rgba(255, 59, 48, 0.3)' }}
+                                    onClick={logout}
+                                >
+                                    <span className="btn-text" style={{ color: '#ff3b30' }}>Logout</span>
+                                    <span className="btn-jp">ログアウト</span>
+                                </button>
+                            </>
+                        )}
                     </div>
 
                     <div className="auth-footer">
@@ -56,3 +95,4 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+
